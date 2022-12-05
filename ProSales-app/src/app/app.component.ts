@@ -5,7 +5,7 @@ import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: '<router-outlet></router-outlet>',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private _storageService: StorageService
       ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
     console.log('CASA DECRYPT: ', this._storageService.getItem('Casa'));
   }
-  
+
 
 
 }

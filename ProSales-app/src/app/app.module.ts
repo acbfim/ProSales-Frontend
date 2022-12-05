@@ -9,11 +9,23 @@ import { MaterialModule } from './modules';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
+import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
+import { DefaultFooterComponent } from './containers/default-layout/default-footer/default-footer.component';
+import { DefaultHeaderComponent } from './containers/default-layout/default-header/default-header.component';
+import { NovoTesteComponent } from './pages/novo-teste/novo-teste.component';
+
+const APP_CONTAINERS = [
+  DefaultFooterComponent,
+  DefaultHeaderComponent,
+  DefaultLayoutComponent,
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ...APP_CONTAINERS,
+    NovoTesteComponent
   ],
   imports: [
     BrowserModule,
