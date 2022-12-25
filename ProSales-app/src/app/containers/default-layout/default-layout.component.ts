@@ -13,7 +13,7 @@ export class DefaultLayoutComponent implements OnDestroy, OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
 
-
+  panelOpenState = false;
   sidebarOpen = false;
 
   mobileQuery!: MediaQueryList;
@@ -21,6 +21,33 @@ export class DefaultLayoutComponent implements OnDestroy, OnInit {
   isDesktop = this._globalService.isDesktop();
 
   fillerNav = Array.from({length: 8}, (_, i) => `Nav Item teste tamanho  ${i + 1}`);
+
+  public isExpanded = false;
+
+  public toggleMenu() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  public menu = [
+    { link: "auth/teste", name: "Teste", icon: "dashboard" }
+    ,{ link: "auth/auth2", name: "Auth 2", icon: "contacts" }
+    ,{ link: "auth/nav-teste", name: "Nav Teste", icon: "contacts" }
+    ,{ name: "Meus atendimentos", icon: "campaign"
+      , items: [
+        { link: "auth/teste", name: "Teste", icon: "home" }
+        ,{ link: "auth/login", name: "Login", icon: "person" }
+        ,{ link: "auth/login2", name: "Logi ", icon: "menu" }
+      ]
+    }
+    ,{ name: "Login 2", icon: "person"
+      , items: [
+        { link: "auth/teste2", name: "Teste", icon: "home" }
+        ,{ link: "auth/login2", name: "Login", icon: "" }
+        ,{ link: "auth/login22", name: "Login icone com nome grande", icon: "dashboard" }
+      ]
+    }
+  ];
+
 
 
 
@@ -48,7 +75,6 @@ export class DefaultLayoutComponent implements OnDestroy, OnInit {
   navigateTo(route: string){
     if(!this._globalService.isDesktop())
     {
-      console.log('ENTREI');
       this.sidenav.close();
     }
     this._globalService.navigateTo(route);

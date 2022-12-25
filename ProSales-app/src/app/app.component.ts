@@ -23,9 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._storageService.setItem('Casa','MINHA CASA');
 
-    console.log('CASA DECRYPT: ', this._storageService.getItem('Casa'));
   }
 
 

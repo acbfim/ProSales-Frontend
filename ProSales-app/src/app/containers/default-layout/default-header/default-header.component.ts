@@ -51,4 +51,6 @@ export class DefaultHeaderComponent implements OnInit {
     this._globalService._sideNavToggle(this.sidebarOpen);
   }
 
+
+
 }

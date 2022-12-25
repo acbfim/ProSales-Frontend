@@ -7,7 +7,8 @@ export const environment = {
   production: false,
   ambiente: 'qa',
   ambienteAbrev: 'QA',
-  urlApiProAuth: '',
+  urlApiProAuth: `${host}/api`,
+  urlApiProSales: `${host}/api`,
   secretKey: 'as8&6a*h$#oa(23)K8t$#',
 
 };
