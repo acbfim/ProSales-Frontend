@@ -15,7 +15,7 @@ export class AddressService {
   constructor(private http: HttpClient) { }
 
   getByExternalId(externalId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/by-external-id/${externalId}`);
+    return this.http.get<any>(`${this.baseUrl}by-external-id/${externalId}`).pipe();
   }
 
   postCreateAddress(address: CreateAddress) : Observable<RetornoDto> {

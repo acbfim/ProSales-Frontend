@@ -9,7 +9,7 @@ export const environment = {
   ambienteAbrev: 'DEV',
   urlApiProAuth: `${host}/api`,
   //urlApiProSales: `${host}/api`,
-  urlApiProSales: `http://localhost:5000/api`,
+  urlApiProSales: `http://localhost:5068/api`,
   //urlApiProAuth: `http://localhost:5000/api`,
   secretKey: 'as8&6ahh$#oa(23)K8t$#',
 

@@ -1,3 +1,4 @@
+import { StorageService } from './../services/storage.service';
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders, HttpRequest, HttpInterceptor, HttpHandler, HttpEvent } from '@angular/common/http';
@@ -8,51 +9,54 @@ import { tap } from "rxjs/internal/operators/tap";
 
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(
-        private router: Router
+  constructor(
+    private router: Router
+    , private storageService: StorageService
+  ) {
+
+  }
+
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    var uriReq = req.url.split('//')[1].split('/')[0];
+    console.log("TO AQUI",uriReq);
+    if (
+      uriReq === 'viacep.com.br'
+      || uriReq === 'xtalk.ftc.br'
+      || uriReq === 'xtalkcrc.uniftc.edu.br'
+      || uriReq === 'discordapp.com'
+      || uriReq === 'cors-anywhere.herokuapp.com'
     ) {
+      //console.log("aa");
+      return next.handle(req.clone());
+    } else {
 
+      let token = this.storageService.getAccess().accessToken;
+
+
+      if (token !== null) {
+        const cloneReq = req.clone({
+          headers: req.headers.set('Authorization', `Bearer ${token}`)
+        });
+        return next.handle(cloneReq).pipe(
+          tap(
+            succ => { },
+            err => {
+              if (err.status === 401) {
+                this.storageService.cleanAccess();
+                this.router.navigateByUrl('user/lockScreen');
+              }
+            }
+          )
+        );
+
+      }
+      else {
+        return next.handle(req.clone());
+      }
     }
 
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-        var uriReq = req.url.split('//')[1].split('/')[0];
-        //console.log(uriReq);
-        if (
-            uriReq === 'viacep.com.br'
-            || uriReq === 'xtalk.ftc.br'
-            || uriReq === 'xtalkcrc.uniftc.edu.br'
-            || uriReq === 'discordapp.com'
-            || uriReq === 'cors-anywhere.herokuapp.com'
-        ) {
-            //console.log("aa");
-            return next.handle(req.clone());
-        } else {
-
-
-            if (localStorage.getItem('token') !== null) {
-                const cloneReq = req.clone({
-                    headers: req.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
-                });
-                return next.handle(cloneReq).pipe(
-                    tap(
-                        succ => { },
-                        err => {
-                            if (err.status === 401) {
-                                localStorage.removeItem('token');
-                                this.router.navigateByUrl('user/lockScreen');
-                            }
-                        }
-                    )
-                );
-
-            }
-            else {
-                return next.handle(req.clone());
-            }
-        }
-
-
-    }
+  }
 }

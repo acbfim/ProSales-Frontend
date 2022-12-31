@@ -11,7 +11,8 @@ export class StorageService {
     ) {}
 
   cleanAccess() {
-    localStorage.removeItem('access');
+    const nameHash = identificadores.filter(e => e.name === "access")[0].hash;
+    localStorage.removeItem(nameHash);
   }
 
   cleanItem(item: string) {
